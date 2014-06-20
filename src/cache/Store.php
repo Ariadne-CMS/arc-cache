@@ -17,7 +17,7 @@
 	 * You can create a default cache store through the \arc\cache::create factory method.
 	 * @param 
 	 */
-	class Store implements StoreInterface, \arc\KeyValueStoreInterface, \arc\PathTreeInterface {
+	class Store implements StoreInterface {
 
 		protected $timeout = 7200;
 		protected $context = null;

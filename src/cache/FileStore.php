@@ -11,7 +11,7 @@
 	// FIXME: not specific to \arc\cache really
 	namespace arc\cache;
 
-	class FileStore implements \arc\PathTreeInterface, \arc\KeyValueStoreInterface {
+	class FileStore {
 
 		protected $root = null;
 		protected $currentPath = null;
