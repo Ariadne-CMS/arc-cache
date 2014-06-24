@@ -4,7 +4,7 @@
 	"description": "Ariadne Component Library: Cache Component",
 	"keywords": ["component","components"],
 	"homepage": "https://github.com/Ariadne-CMS/arc/wiki",
-	"license": "GPL",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Auke van Slooten",
@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": ">=5.4",
-		"arc/base": ">=1.0"
+		"arc/base": "~1.0"
 	},
 	"autoload": {
 		"psr-4": {
