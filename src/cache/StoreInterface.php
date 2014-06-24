@@ -9,7 +9,7 @@
 	 * file that was distributed with this source code.
 	 */
 	 
-	namespace arc\cache;
+namespace arc\cache;
 	
 	interface StoreInterface {
 

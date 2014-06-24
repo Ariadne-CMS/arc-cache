@@ -9,7 +9,7 @@
 	 * file that was distributed with this source code.
 	 */
 
-	namespace arc\cache;
+namespace arc\cache;
 
 	/**
 	 * This class implements a generic cache store based on the \arc\cache\StoreInterface.

@@ -9,7 +9,7 @@
 	 * file that was distributed with this source code.
 	 */
 	// FIXME: not specific to \arc\cache really
-	namespace arc\cache;
+namespace arc\cache;
 
 	class FileStore {
 

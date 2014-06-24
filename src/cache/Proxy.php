@@ -15,7 +15,7 @@
 	// 3) if a cache image may be stored
 	// it needs access to the cache image stored/to store and the proxied object
 
-	namespace arc\cache;
+namespace arc\cache;
 
 	class Proxy {
 		use \arc\traits\Proxy {
