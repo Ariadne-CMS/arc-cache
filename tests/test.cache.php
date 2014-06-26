@@ -85,4 +85,14 @@
             $this->assertFalse( $result );
             $this->assertTrue( ($end-$middle) < ($middle-$start) );
         }
+
+        function testCacheControl() 
+        {
+            \arc\cache::purge();
+            $testProxy = \arc\cache::proxy( new takesTooLong( true ), function( $params ) {
+                return 30;
+            } );
+            $result = $testProxy->waitForIt();
+            $this->assertTrue( $result );
+        }
     }
