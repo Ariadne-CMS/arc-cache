@@ -189,9 +189,7 @@ namespace arc\cache;
          */
         public function getIfFresh($name, $freshness = 0)
         {
-            $freshness = $this->getTimeout( $freshness );
-            $info = $this->getInfo( $name );
-            if ($info && $info['mtime'] >= $freshness) {
+            if ($this->isFresh($name, $freshness)){
                 return $this->get( $name );
             } else {
                 return null;
