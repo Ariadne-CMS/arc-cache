@@ -96,7 +96,7 @@ class FileStore
         $dir = dir( $this->basePath );
         $result = array();
         if ($dir) {
-            while ( $name = $dir->read()) {
+            while ($name = $dir->read()) {
                 if (!is_dir($this->basePath . $name )) {
                     $name = base64_decode($name);
                 }
@@ -117,7 +117,7 @@ class FileStore
 
     protected function cleanup($dir)
     {
-        foreach ( glob( $dir . '/*' ) as $file ) {
+        foreach (glob( $dir . '/*' ) as $file) {
             if (is_dir( $file )) {
                 $this->cleanup( $file );
             } else {
