@@ -14,7 +14,6 @@ notifications:
   email: false
   irc:
     channels:
-       - "open.ircnet.org#ariadne"
+       secure: "DYD4TgeQd84i1MCnl7xH0ErATgtUnhyzuLqpHfgs9/54y4B5RH5o0qR+hDS4JyrpJbPPt6BxQMk606sXu393I07k1MCPppxnhqLdL4t26VX5uWJFAPJ5FF/aD0kALVYUmJICIgjqD1fdlgdOPqCq/YXMk9N1o0XGtK9YKpq30V0="
     on_success: change
     on_failure: always
-
