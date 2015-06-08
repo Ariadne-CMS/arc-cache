@@ -22,7 +22,7 @@ class Store implements StoreInterface
     protected $timeout = 7200;
     protected $context = null;
     protected $storage = null;
-    protected $currentpath = null;
+    protected $currentPath = null;
 
     public function __construct($storage, $context = null, $timeout = 7200, $currentPath = null)
     {
