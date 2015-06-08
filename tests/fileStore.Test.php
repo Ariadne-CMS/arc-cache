@@ -34,7 +34,6 @@
             }
         }
 
-        /* failes
         function testpurge()
         {
             $fs = self::filestoreHelper();
@@ -42,6 +41,4 @@
             $fs->purge('test');
             $this->assertNotEquals('test', $fs->getvar('test'));
         }
-         */
-
     }
