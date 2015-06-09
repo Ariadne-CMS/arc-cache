@@ -11,10 +11,11 @@
 namespace arc;
 
 /**
- *	@requires \arc\path
- *	@requires \arc\context
+ * Class cache
+ * @package arc
+ * @requires \arc\path
+ * @requires \arc\context
  */
-
 class cache
 {
     /**
@@ -52,6 +53,11 @@ class cache
         return new cache\Store( $fileStore, $context, $timeout );
     }
 
+    /**
+     * This method creates a new cache store, if one is not available in \arc\context yet, stores it in \arc\context
+     * and returns it.
+     * @return cache\Store
+     */
     public static function getCacheStore()
     {
         $context = \arc\context::$context;
@@ -62,6 +68,13 @@ class cache
         return $context->arcCacheStore;
     }
 
+    /**
+     * This reroutes any static calls to \arc\cache to the cache store instance in \arc\context
+     * @param $name
+     * @param $args
+     * @return mixed
+     * @throws ExceptionMethodNotFound
+     */
     public static function __callStatic($name, $args)
     {
         $store = self::getCacheStore();
@@ -72,8 +85,19 @@ class cache
         }
     }
 
-    public static function proxy($object, $timeout = 7200)
+    /**
+     * Creates a new caching proxy object for any given object.
+     * @param       $object The object to cache
+     * @param mixed $cacheControl Either an integer with the number of seconds to cache stuff, or a closure that returns an int.
+     *                            The closure is called with one argument, an array with the following information:
+     *                            - target      The cached object a method was called on.
+     *                            - method      The method called
+     *                            - arguments   The arguments to the method
+     *                            - result      The result of the method
+     * @return cache\Proxy
+     */
+    public static function proxy($object, $cacheControl = 7200)
     {
-        return new cache\Proxy( $object, self::getCacheStore(), $timeout );
+        return new cache\Proxy( $object, self::getCacheStore(), $cacheControl );
     }
 }
