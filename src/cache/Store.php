@@ -22,6 +22,7 @@ class Store implements StoreInterface
     protected $timeout = 7200;
     protected $context = null;
     protected $storage = null;
+    protected $currentPath = null;
 
     public function __construct($storage, $context = null, $timeout = 7200, $currentPath = null)
     {
@@ -183,7 +184,7 @@ class Store implements StoreInterface
     /**
      *  This method returns the value associated with the given name if it is still fresh,
      *  otherwise it will return null. You can set a minimum freshness time.
-     *  @param string $path
+     *  @param string $name
      *  @param mixed $freshness either a unix timestamp or a string parseable by strtotime
      *  @return mixed
      */
