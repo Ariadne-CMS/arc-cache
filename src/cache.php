@@ -24,10 +24,8 @@ class cache
      * defined in the system temp dir under arc/cache/.
      * @param string $prefix  Optional. A prefix name or path for subsequent cache images
      * @param mixed  $timeout Optional. Number of seconds (int) or string parseable by strtotime. Defaults to 7200.
-     * @param object $context Optional. A context container (e.g. \arc\lambda\Prototype) from which the
-     *                        starting path is retrieved ( $context->arcPath )
      */
-    public static function create($prefix = null, $timeout = 7200, $context = null)
+    public static function create($prefix = null, $timeout = 7200)
     {
         if (!defined('ARC_CACHE_DIR')) {
             define( 'ARC_CACHE_DIR', sys_get_temp_dir().'/arc/cache' );
