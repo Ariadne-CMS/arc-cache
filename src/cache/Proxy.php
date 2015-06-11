@@ -117,8 +117,7 @@ class Proxy
     public function __call($method, $args)
     {
         // create a usable but unique filename based on the arguments and method name
-        //FIXME: md5 isn't collision resistant, so this might get abused to retrieve an incorrect result
-        $path = $method . '(' . md5( serialize($args) ) . ')';
+        $path = $method . '(' . sha1( serialize($args) ) . ')';
 
         $cacheData = $this->__callCached( $method, $args, $path );
         echo $cacheData['output'];
