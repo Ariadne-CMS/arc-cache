@@ -11,19 +11,31 @@
 
 namespace arc\cache;
 
+/**
+ * Class Proxy
+ * @package arc\cache
+ */
 class Proxy
 {
     use \arc\traits\Proxy {
         \arc\traits\Proxy::__construct as private ProxyConstruct;
     }
 
-    // TODO: allow more control on retrieval:
-    // - get contents from cache even though cache may be stale
-    //   perhaps through an extra option in __construct?
     protected $cacheStore   = null;
     protected $cacheControl = null;
     protected $targetObject = null;
 
+    /**
+     * Creates a new Caching Proxy object.
+     * @param object $targetObject  The object to cache.
+     * @param object $cacheStore    The cache store to use, e.g. \arc\cache\FileStore
+     * @param mixed  $cacheControl  Either an int with the number of seconds to cache results, or a Closure that returns an int.
+     *                              The Closure is called with a single array with the following entries:
+     *                              - target      The cached object a method was called on.
+     *                              - method      The method called
+     *                              - arguments   The arguments to the method
+     *                              - result      The result of the method
+     */
     public function __construct($targetObject, $cacheStore, $cacheControl = 7200)
     {
         $this->ProxyConstruct( $targetObject );
@@ -32,7 +44,13 @@ class Proxy
         $this->cacheControl = $cacheControl;
     }
 
-    protected function __callCatch($method, $args)
+    /**
+     * Catches output and return values from a method call and returns them.
+     * @param string $method
+     * @param array $args
+     * @return array with keys 'output' and 'result'
+     */
+    private function __callCatch($method, $args)
     {
         // catch all output and return value, return it
         ob_start();
@@ -46,7 +64,15 @@ class Proxy
         );
     }
 
-    protected function __callCached($method, $args, $path)
+    /**
+     * Checks if a fresh cache image for this method and these arguments is available
+     * and returns those. If not, it lets the call through and caches its output and results.
+     * @param string $method
+     * @param array  $args
+     * @param string $path
+     * @return array
+     */
+    private function __callCached($method, $args, $path)
     {
         // check the cache, if fresh, use the cached version
         $cacheData = $this->cacheStore->getIfFresh( $path );
@@ -74,7 +100,6 @@ class Proxy
                 $cacheData = $this->cacheStore->get( $path );
             } else {
                 // wait failed, so just do the work without caching
-                // FIXME: this should probably be configurable somewhere
                 $cacheData = $this->__callCatch( $method, $args );
             }
         }
@@ -82,6 +107,13 @@ class Proxy
         return $cacheData;
     }
 
+    /**
+     * Catches a call to the target object and caches it. If the result is an object, it creates a
+     * cache proxy for that as well.
+     * @param string $method
+     * @param array  $args
+     * @return mixed
+     */
     public function __call($method, $args)
     {
         // create a usable but unique filename based on the arguments and method name
@@ -98,6 +130,12 @@ class Proxy
         return $result;
     }
 
+    /**
+     * Catches any property access to the target object and caches it. If the property is an object
+     * it creates a cache proxy for that as well.
+     * @param string $name
+     * @return mixed
+     */
     public function __get($name)
     {
         $result = $this->targetObject->{$name};

@@ -17,3 +17,14 @@ Application Framework and Content Management System
 arc/cache contains
 ------------------
 - cache: a generic cache class and caching proxy object.
+
+TODO
+----
+
+- \arc\cache\Proxy: allow more control on retrieval:
+  get contents from cache even though cache may be stale
+  perhaps through an extra option in __construct
+  
+- \arc\cache\Proxy: stampede protection is skipped when the cacheStore wait() call fails,
+  it then just calls the target object and method. This may not be desirable, should
+  probably make this configurable.
