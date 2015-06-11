@@ -15,23 +15,22 @@ namespace arc\cache;
  * This class implements a generic cache store based on the \arc\cache\StoreInterface.
  * It requires an instance of a storage class, e.g. \arc\cache\FileStore.
  * You can create a default cache store through the \arc\cache::create factory method.
- * @param
  */
 class Store implements StoreInterface
 {
-    protected $timeout = 7200;
-    protected $context = null;
-    protected $storage = null;
-    protected $currentPath = null;
+    private $timeout = 7200;
+    private $storage = null;
+    private $currentPath = null;
 
-    public function __construct($storage, $context = null, $timeout = 7200, $currentPath = null)
+    /**
+     * @param object     $storage     An object implementing the methods in \arc\cache\FileStore
+     * @param int|string $timeout     Default cache timeout in seconds or a string parseable by strtotime
+     * @param null       $currentPath The current path in the cache store.
+     */
+    public function __construct($storage, $timeout = 7200, $currentPath = null)
     {
-        $this->context = $context;
         $this->timeout = $this->getTimeout( $timeout );
-        if (!isset( $currentPath )) {
-            $currentPath = ( isset($context) ? $context->arcPath : '/' );
-        }
-        $this->currentPath = $currentPath;
+        $this->currentPath = $currentPath ?: '/';
         $this->storage = $storage->cd( $this->currentPath );
     }
 
@@ -71,7 +70,7 @@ class Store implements StoreInterface
     {
         $path = \arc\path::collapse( $path, $this->currentPath );
 
-        return new Store( $this->storage, $this->context, $this->timeout, $path);
+        return new Store( $this->storage, $this->timeout, $path);
     }
 
     /**
@@ -112,7 +111,7 @@ class Store implements StoreInterface
      */
     public function timeout($timeout)
     {
-        return new Store( $this->storage, $this->context, $timeout, $this->currentPath );
+        return new Store( $this->storage, $timeout, $this->currentPath );
     }
 
     /**
@@ -252,7 +251,7 @@ class Store implements StoreInterface
         return $this->storage->purge( $name );
     }
 
-    protected function getTimeout($timeout)
+    private function getTimeout($timeout)
     {
         if (!isset( $timeout )) {
             $timeout = time();
