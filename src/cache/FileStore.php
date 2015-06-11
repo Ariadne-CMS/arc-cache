@@ -46,8 +46,8 @@ class FileStore
 
     /**
      * Returns the contents for a cached image, if it exists, null otherwise.
-     * @param $name
-     * @return string
+     * @param string $name
+     * @return string|null
      */
     public function getVar($name)
     {
@@ -59,8 +59,8 @@ class FileStore
 
     /**
      * Store a value as a cached image.
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
      * @return int
      */
     public function putVar($name, $value)
