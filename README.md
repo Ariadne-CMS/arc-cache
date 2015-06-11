@@ -16,7 +16,7 @@ Application Framework and Content Management System
 
 arc/cache contains
 ------------------
-- cache: a generic cache class and caching proxy object.
+- cache: a generic cache class and caching proxy object. See [docs/cache.md](docs/cache.md) for more information.
 
 TODO
 ----

@@ -215,8 +215,11 @@ class Store implements StoreInterface
      */
     public function wait($name)
     {
-        $this->lock( $name, true);
-        $this->unlock( $name );
+        if ($this->lock( $name, true)) {
+            return $this->unlock($name);
+        } else {
+            return false;
+        }
     }
 
     /**
